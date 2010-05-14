@@ -82,6 +82,9 @@ $(function() {
                 var formrow = select.closest('.form-row');
                 if ($('a.disable', formrow).length) {
                     $('iframe', formrow)[0].contentWindow.document.getElementsByTagName("body")[0].innerHTML = html;
+                } else if ($('input:text', formrow).length) {
+                    // If this field uses an html text input, update its value.
+                    $('input:text', formrow).val(html);
                 } else {
                     var formrow_textarea = $('textarea', formrow).val(html);
                     // support for WYMeditor
