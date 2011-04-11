@@ -5,6 +5,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import loader, Context, RequestContext
 from pages import settings
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from StringIO import StringIO
+
 
 def get_request_mock():
     """Build a request mock that can be used for testing."""
@@ -14,6 +19,12 @@ def get_request_mock():
         'REQUEST_METHOD': 'GET',
         'SERVER_NAME': 'test',
         'SERVER_PORT': '8000',
+        'wsgi.version': (1, 0),
+        'wsgi.url_scheme': 'http',
+        'wsgi.multiprocess': True,
+        'wsgi.multithread':  False,
+        'wsgi.run_once':     False,
+        'wsgi.input': StringIO(''),
     })
     # Apply request middleware
     for middleware_method in bh._request_middleware:
